@@ -1,0 +1,115 @@
+---
+title: "MATH 3070 Lab Project 2"
+author: "Maria R Bazaldua"
+date: "June 9, 2022"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+*Remember: I expect to see commentary either in the text, in the code with comments created using `#`, or (preferably) both! **Failing to do so may result in lost points!***
+
+
+
+## Problem 1 (Verzani problem 2.4)
+*Create the following sequences, using `:`, `seq()`, or `rep()` as appropriate:*
+
+1. `"a" "a" "a" "a" "a" "a"`
+
+```{r}
+# Your solution here
+rep("a", 6)
+```
+
+2. `1 3 ... 99` *(the odd numbers)*
+
+```{r}
+# Your solution here
+seq (1,99, by = 2)
+```
+
+3. `1 1 1 2 2 2 3 3 3`
+
+```{r}
+# Your solution here
+rep(c(1, 2, 3), each = 3)
+```
+
+## Problem 2 (Verzani problem 2.3)
+*Let our small data set be* `2 5 4 10 8`.
+
+1. *Enter this data into a data vector `x`.*
+
+```{r}
+# Your solution here
+x <- c(2, 5, 4, 10, 8)
+x   #using to show the result of creating the vector 
+```
+
+2. *Find the square of each number.*
+
+```{r}
+#Your solution here
+#using the previously created vector to square each number
+x^2 
+```
+
+3. *Subtract 6 from each number.*
+
+```{r}
+#Your solution here
+#using the previously created vector (x) to subtract 6 from each number
+x - 6
+```
+
+4. *Subtract 9 from each number and then square the answer.*
+
+```{r}
+#Your solution here
+(x - 9)^2
+
+sub <- (x-9) #first subtracting the nine from each number and assigning the result to "sub"
+sub^2   #the squares of sub
+```
+
+## Problem 3
+*The `faithful` (Package **datasets** is built in Base R) dataset records the waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park. Find the mean waiting time, median waiting time, longest waiting time and shortest waiting time in minutes.*
+
+```{r}
+# Your solution here
+
+faithful #because the dataset is already in R it can be called easily 
+summary(faithful) #creates a numerical summary of the information in the dataset
+
+#The mean waiting time was 70.9 minutes, the median waiting time was 76.0 minutes
+#the longest time spent waiting was 96.0 minutes and the least time spent waiting was 43 minutes. 
+```
+
+
+## Problem 4 (Verzani problem 2.25)
+*Write a function `isprime()` that checks if a number $x$ is prime by dividing $x$ by all the values in $2, ..., x - 1$ then checking to see if there is a remainder of 0. The expression `a %% b` returns the remainder of `a` divided by `b`.*
+
+```{r}
+# Your code here
+is.prime <- function(num) {
+  if (num == 2) { #if the number is 2 then the number is prime, this is base case
+    TRUE
+  } else if (any(num %% 2: (num - 1) == 0)) { #if any number can be divided by itself and 1 then it is prime
+    FALSE}
+  else { #else a number is prime 
+    TRUE
+  }
+}
+is.prime(2) #testing if the function works, 2 is a prime number
+is.prime(4) #4 is not a prime number because it can be divided by 1, 2, and 4
+is.prime(7) #7 is a prime number
+```
+
+*You do not need to check all numbers from 2 to $x - 1$ to see if a number is prime. What is the largest you would
+need to go for an arbitrary $x$? Create a new function, `isprime2()`, that implements this better (yet still slow) method.*
+
+```{r}
+# Your code here
+```
