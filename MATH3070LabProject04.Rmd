@@ -1,0 +1,111 @@
+---
+title: "MATH 3070 Lab Project 04"
+author: "Maria R Bazaldua"
+date: "June 16, 2022"
+output:
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+urlcolor: blue
+---
+
+*Remember: I expect to see commentary either in the text, in the code with comments created using `#`, or (preferably) both! **Failing to do so may result in lost points!***
+
+## Problem 1 (Verzani problem 4.7)
+*Use the `subset()` function to return a data frame made from the `Cars93` (**MASS**) data frame consisting only of `non-USA` cars in origin, with 4 cylinders and a maximum price of \$15,000 or less.*
+
+```{r, tidy=TRUE,error=TRUE}
+# Your code here
+
+ subset(Cars93, select = c(Origin, Cylinders, Max.Price), subset = Cylinders == 4 & Origin == "non-USA" & Max.Price <= 15)
+
+#the subset function is a built in function in R that is able to return a data from selected data. The selected data can be further specified by using another subsection function. 
+```
+
+## Problem 2 (Verzani problem 4.10)
+*Find the standard deviation of each variable in the `mtcars` data set.*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+
+mtcars_subset <- subset(mtcars, select = c(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb)) #creating a subset so only numeric variables are used for the standard deviation function
+mtcars_sd <- c() #creating a new function to loop mtcars_subset
+
+for (vec in mtcars_subset) { mtcars_sd <- c(mtcars_sd, sd(vec))} #creating the loop that will return the SD for each column of numeric values 
+names(mtcars_sd) <-names(mtcars_subset) 
+mtcars_sd #returning the SD values for each variable
+
+
+```
+
+## Problem 3 (Verzani problem 4.11)
+*Find the standard deviation for each numeric variable in `Cars93` (**MASS**).*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+cars93_subset <- subset(Cars93, select = c(Min.Price, Price, Max.Price, MPG.city, MPG.highway, EngineSize, Horsepower, RPM, Rev.per.mile, Fuel.tank.capacity, Passengers, Length, Wheelbase, Width, Turn.circle, Weight))
+
+
+luggage_room <- subset(Cars93, select = c(Luggage.room))
+
+luggage_room_naremoved <- new_subset[!is.na(luggage_room)]
+luggage_sd <- sd(luggage_room_naremoved)
+
+#cylinders values were removed because some rows did not have numeric valuables (eg. rotary)
+
+sapply(cars93_subset, sd)
+print(paste(luggage_sd, "is the SD for luggage room"))
+
+#a built in function that returns a vector of the (in this case) SD for each numeric variable 
+
+
+```
+
+## Problem 4 (Using External Data)
+*You can find data describing various statistics on 2012 Olympic participating nations such as population and medal counts in the comma-separated value file (olympic-medals2012.csv) located [here](http://introcs.cs.princeton.edu/java/data/olympic-medals2012.csv).  Load this dataset into R in a data frame and do the following:*
+
+1. *Create a new data frame containing only the country's ISO code (a three-letter code for the country; USA is the United States of America, and DZA Algeria), name, population, and counts for gold, silver, and bronze. This data frame should be called `olympic2012`.*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+Olympics12 <- read.csv("C:/Users/Bazal/OneDrive/Documents/Applied Statistics/Labs/Project and lab 4/olympic-medals2012.csv") #because the 2012 Olympics Medal information was not in the main working directory had to set path to read CSV file assigning file to olympics12 variable
+
+olympic2012 <- subset(Olympics12, select = c(ISO, pop.2010, Gold, Silver, Bronze)) #creating a new data frame containing ISO code, 2010 population, and medal counts 
+
+olympic2012
+
+```
+
+2. *What proportion of countries earned no medals? Answer this using `olympic2012`.*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+nrow(olympic2012) #total number of participant countries 
+
+nomedals <- subset(olympic2012, select = c(Gold, Silver, Bronze), subset = Gold == 0 & Silver == 0 & Bronze == 0) #getting the subset of countries that got no medals 
+
+nrow(nomedals) #total of participant countries that earned no medals 
+
+nomedal_proportion <- nrow(nomedals)/ nrow(olympic2012)
+
+print("The proportion of countries that earned no medals is:")
+nrow(nomedals)/ nrow(olympic2012)
+
+```
+
+
+
+## Problem 5 (Verzani problem 5.1)
+*For the `UScereal` (**MASS**) data set, create a scatter plot of `calories` modeled by `sugars` using the `shelf` variable to create different plot characters. Add a legend to indicate the shelf number. Is there any patterns? (Use base R plotting for this problem.)*
+
+```{r, tidy=TRUE, error=TRUE}
+library(MASS)
+#Your code here
+with(UScereal, plot(sugars, calories, main = "Sugars and Calories in USCereals", pch = shelf))
+
+
+legend(18, 425, c(1,2,3), pch = 1:3)
+```
