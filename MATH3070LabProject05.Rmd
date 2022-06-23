@@ -1,0 +1,111 @@
+---
+title: "MATH 3070 Lab Project 05"
+author: "Maria R Bazaldua"
+date: "June 15, 2022"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+*Remember: I expect to see commentary either in the text, in the code with comments created using `#`, or (preferably) both! **Failing to do so may result in lost points!***
+
+
+## Problem 1 (Verzani problem 5.3)
+*For the data set `UScereal` (**MASS**) make a pairs plot of the numeric variables. Which correlation looks larger: fat and calories or fat and sugars?*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+install.packages("MASS")
+library(UsingR)
+pairs(UScereal[c("calories", "fat", "sugars")])
+
+```
+
+## Problem 2 (Verzani problem 5.4)
+*For the data set `batting` (**UsingR**) make a bubble plot of home runs hit (`HR`) modeled by hits (`H`) where the scale factor for each point is given by `sqrt(SO)/10`. Is there any story to be told by the size of the points? (You must use base R plotting for this problem.)*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+#UsingR::batting
+home_runs <- subset(batting, select = c(H, HR))
+plot(home_runs, cex = sqrt(SO)/10)
+
+```
+
+
+## Problem 3 (Verzani problem 5.6)
+*For the `batting` (**UsingR**) data set, make parallel boxplots of the batting average (`H/AB`) for each team. Which team had the greatest median average? (Use **lattice** functions for this problem.)*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+library(lattice)
+bwplot(teamID ~ H/AB, data = batting)
+
+```
+
+## Problem 4 (Verzani problem 5.7)
+*For the `mtcars` data set, produce graphics of the following using **ggplot2**:*
+
+1. *Boxplots for miles per gallon (`mpg`) for groups defined by the number of gears (`gear`).*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+library(ggplot2)
+bwplot(gear ~ mpg, data = mtcars)
+```
+
+3. *A scatterplot of `mpg` modeled by horsepower (`hp`). Create facets by the number of cylinders (`cyl`) and `gear`.*
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point() + facet_grid(cyl ~ gear)
+
+```
+
+## Problem 5
+*Using the `batting` data set (UsingR), create a visualization that does the following:*
+
+* *Plots the* rate *of intentional walks (that is, the number of intentional walks divided by the number of times a player was at bat; these are the `IBB` and `AB` variables in the data set, respectively) against the* rate *of home runs (the `HR` variable in the data set) as a scatterplot*
+
+* *Draws a trend line for these variables*
+
+* *Identifies and labels the outlier in the data set in these variables (easily spotted once the scatter plot is drawn)*
+
+*(Hint: `geom`-type functions can accept data arguments and will use the data set passed rather than the default for the chart. So for the third requirement, consider adding a text layer with `geom_text(data = ..., aes(...))` where the argument passed to `data` is a subset of the data set consisting of the outlier, and `aes(...)` defines how to label that outlier.)*
+
+```{r, tidy = TRUE, error=TRUE}
+# Your code here
+ ggplot(batting, aes(x = HR, y = IBB/AB)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+
+
+```
+
+## BONUS Problem
+*Reconsider the data set from a previous project containing data about the results of 2012 Olympics. I load the data in for you below:*
+
+```{r}
+setwd("/Users/chengminhua/Downloads/TA/22-Summer-3070-002/Minhua Lab 05/") 
+#you will need to change to working directory to your own computer.
+olympic2012 <- read.csv("olympic-medals2012.csv")
+
+# Alternatively, you can load this data set by uncomment the command below.
+# olympic2012 <- read.csv("http://introcs.cs.princeton.edu/java/data/olympic-medals2012.csv")
+
+# Some variables are read in as strings when, in truth, they are numeric (they separate 
+# thousands with commas, leading to them being read as strings). I fix this below using 
+# the transform function, which allows for modifying columns in a data frame using 
+# methods similar to with.
+olympic2012 <- transform(
+  olympic2012, 
+  GDP.2011 = as.numeric(gsub(",", "", GDP.2011)), 
+  pop.2010 = as.numeric(gsub(",", "", pop.2010))
+)
+```
+
+*Use any plotting system (base R, **lattice**, **ggplot2**) to create plot involving at least three variables in the `olympic2012` data set. Explain the relationship you explored and any interesting findings. **Bonus points will be given for plots that I consider exceptionally clean, clear, and insightful, accompanied with good analyses of what you found.***
+
+```{r, tidy=TRUE, error=TRUE}
+# Your code here
+```
