@@ -1,0 +1,84 @@
+---
+title: "MATH 3070 Lab Project 08"
+author: "Maria R Bazaldua"
+date: "Release Date: July 6, 2022"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes 
+---
+
+*Remember: I expect to see commentary either in the text, in the code with comments created using `#`, or (preferably) both! **Failing to do so may result in lost points!***
+
+
+
+## Problem 1 (Verzani problem 6.23)
+*Find the quintiles ($0^{\text{th}}$, $20^{\text{th}}$, $40^{\text{th}}$, $60^{\text{th}}$, $80^{\text{th}}$, and $100^{\text{th}}$ quantiles/percentiles) of the standard Normal distribution (this is a normal distribution with mean 0 and standard deviation 1).*
+
+```{r}
+# Your code here
+
+```
+
+## Problem 2 (Coin Tossing Simulation)
+*Consider flipping a fair coin $n$ times and counting the number of time the coin lands heads-up. This is a binomial random variable, but it turns out that as $n$ gets large, this distribution can be approximated with a Normal distribution, where the mean is $0.5 \times n$ and the standard deviation is $0.5 \times \sqrt{n}$. We know this thanks to the central limit theorem. When flipping 3, 5, and 20 times, plot the pmf of the binomial random variable with the appropriate parameters (you may use my function `plot_pmf()` from the lecture notes). Superimpose on each of these plots the density curve of the Normal distribution with the appropriate parameters (use the `lines()` function to do so; an example for doing this is in the lecture notes). What do you notice? When does the approximation appear best?*
+
+```{r, tidy=TRUE}
+# Your code here
+```
+
+
+*\color{red}Because randomization is used in the following problems, I set the seed here, in addition to beginning each code block. **Do not change the seed!** *
+
+```{r}
+set.seed(6222016)
+```
+
+## Problem 3 (Verzani problem 7.1)
+*Simulate 1000 rolls of a pair of dice, and compute the sum of each pair. Which is more common, a roll of 7 or 8?*
+
+```{r, echo=FALSE}
+# Seed reset; DO NOT CHANGE THE SEED!
+set.seed(6222016)
+```
+
+```{r, tidy=TRUE}
+# Your code here
+```
+
+
+## Problem 4 (Verzani problem 7.2)
+*For the `rivers` data set, take 1000 random samples of size 10. Compare the mean of the sample means computed from these samples, with the sample mean of the data in `rivers`.*
+
+```{r, echo=FALSE}
+# Seed reset; DO NOT CHANGE THE SEED!
+set.seed(6222016)
+```
+
+```{r, tidy=TRUE}
+# Your code here
+```
+
+These means are very similar.
+
+## Problem 5 (Investigating `Melanoma`)
+*The data set `Melanoma` (**MASS**) includes data for 205 Danish patients with malignant melanoma. The variable `time` describes survival time in days, and `sex` describes the sex of the patient. Does survival time differ between the sexes?*
+
+1. *Find $\bar{x}_{\text{men}} - \bar{x}_{\text{women}}$, the mean difference in survival time (`time`) between men and women (`sex`) in `Melanoma`.*
+
+```{r, tidy = TRUE}
+# Your code here
+```
+
+2. *Investigate whether the difference you observed in part 1 is significant, using procedures explored in the lecture. There are two groups in this investigation: male (`Melanoma$sex == 0`) and female (`Melanoma$sex == 1`). Randomly reassign the data in the `time` variable to the two groups, and compute the mean difference. Repeat 2000 times (this needs to be done relatively quickly; if it takes over a few minutes, I will dock points), and determine how frequently the difference in the mean survival time between men and women (that is, $\bar{x}_{\text{men}} - \bar{x}_{\text{women}}$ in the simulated data is less than the same difference observed in the actual data. Does this analysis suggest the difference is due to "noise", or due to an actual difference in survival time between men and women?*
+
+```{r, echo=FALSE}
+# Seed reset; DO NOT CHANGE THE SEED!
+set.seed(6222016)
+```
+
+```{r, tidy=TRUE}
+# Your code here
+```
+
