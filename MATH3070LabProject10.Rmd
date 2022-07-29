@@ -1,0 +1,85 @@
+---
+title: "MATH 3070 Lab Project 10"
+author: "Maria R Bazaldua"
+date: "Due Date: July 21, 2022"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+*Remember: I expect to see commentary either in the text, in the code with comments created using `#`, or (preferably) both! **Failing to do so may result in lost points!***
+
+
+## Problem 1 (Verzani problem 9.14)
+*The data set `normtemp` (**UsingR**) contains measurements of 130 healthy, randomly selected individuals. The variable `temperature` contains normal body temperature. Does the data appear to come from a Normal distribution? If so, perform a $t$-test to see if the commonly assumed value of 98.6 degrees fahrenheit is correct. (Studies have suggested that 98.2 degrees fahrenheit is more accurate.)*
+
+```{r, tidy = TRUE}
+# Your code here
+
+install.packages("UsingR") #installing Using R package for problem 1
+library(UsingR) #acquiring the data from the UsingR
+
+data <- normtemp
+temp <- normtemp$temperature
+qqnorm(temp) #using qqnorm to see if distribution appears to be approx. normal 
+
+#distribution is approx norm
+t.test(temp, mu = 98.6) #using t.test R function to determine if mu = 98.6
+#based on our evidence and default alpha of .05, we reject H null as the true range is below 98.6 
+
+```
+
+
+
+## Problem 2 (Verzani problem 9.4)
+*In the United States in 2007, the proportion of adults age 21-24 who had no medical insurance was 28.1 percent. A survey of 75 recent college graduates in this age range finds that 40 percent are without insurance. Does this support a difference from the nationwide proportion? Perform a test of significance and report the p-value. Is it significant? (Perform this test "by hand", not using `prop.test()`.)*
+
+```{r, tidy = TRUE}
+# Your code here
+
+phat <- .40 #forty percent of the 75 surveyed students do not have insurance
+n <- 75
+usp <- 28.1
+
+#p times 1 - p all divided by 75
+denom <- .281*.719/75
+denom
+
+z <- (.40 - .281)/sqrt(denom) #using z test for significance testing 
+z
+
+pval <- 2*(1-pnorm(abs(z))) #using R functions to calculate p value 
+pval
+
+#based on our evidence at default alpha .05 we reject h null since .02 is less, the proportion of college students surveyed were more likely to not have insurance than the general population
+
+```
+
+## Problem 3 (Verzani problem 9.16)
+*A one-sided, one-sample $t$-test will be performed. What sample size is needed to have a power of 0.80 for a significance level of 0.05 if `delta = 0.05` and the population standard deviation is assumed to be 5?*
+
+```{r, tidy = TRUE}
+# Your code here
+
+power.prop.test(power = .80, p1 = .05, p2 = .051, alternative = c("one.sided")) #using R function to find n needed for survey, in order to find n we also need a p2 value 
+
+```
+
+## Problem 4 (Verzani problem 9.31)
+*For the `babies` (**UsingR**) data set, the variable `age` contains the recorded mom's age and `dage` contains the dad's age for several cases in the sample. Do a significance test of the null hypothesis of equal ages against a one-sided alternative that the dads are older in the sampled population.*
+
+```{r, tidy = TRUE}
+# Your code here
+
+momage <- babies$age
+dadage <- babies$dage
+
+t.test(momage, dadage, alternative = "two.sided", conf.level = .05) #using two sided to t.test to compare to t.test for greater, this t.test shows that there is a difference in means 
+
+t.test(momage, dadage, alternative = "greater", conf.level = .05) #this t. test shows that the dad's age is greater than the mom's age 
+
+
+
+```
